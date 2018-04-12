@@ -24,7 +24,7 @@ class PriorityQueue:
 class A_star:
     def __init__(self, graph, valid_nodes):
         self.graph = graph
-        assert type(valid_nodes) == list
+        assert type(valid_nodes) == dict
         self.valid_nodes = valid_nodes
 
     def heuristic(self, src, dst):
@@ -64,23 +64,22 @@ class A_star:
                         came_from[next] = current
         return self.path_as_list(came_from, goal), cost_so_far
 
-#
+
 # g = nx.Graph()
 # g.add_node(1, coordinate=(0,0))
 # g.add_node(3, coordinate=(1,1))
 # g.add_node(5, coordinate=(1,2))
 # g.add_node(7, coordinate=(0,3))
 # g.add_node(9, coordinate=(-2,5))
+# g.add_node(8, coordinate=(-3,3))
 # # g.add_node(2, coordinate=(-2,1.5))
-# g.add_node(2, coordinate=(0.01,2.99))
-# g.add_edges_from([(1, 2), (1, 3),(2, 9),(9, 7),(3, 5),(5, 7),(2,7)])
+# g.add_node(2, coordinate=(-0.01,2.99))
+# g.add_edges_from([(1, 2), (1, 3),(2, 9),(9, 7),(3, 5),(5, 7),(2,8)])
 #
-# valid_nodes = []
+# valid_nodes = {}
 # for n1, n2 in g.edges():
-#     if n1 not in valid_nodes:
-#         valid_nodes.append(n1)
-#     if n2 not in valid_nodes:
-#         valid_nodes.append(n2)
+#     valid_nodes[n1] = 0
+#     valid_nodes[n2] = 0
 #     c1, c2 = osmgraph.tools.coordinates(g, (n1, n2))
 #     g[n1][n2]['length'] = geog.distance(c1, c2)
 #
