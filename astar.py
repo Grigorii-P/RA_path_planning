@@ -1,6 +1,7 @@
 import heapq
 import osmgraph
 import geog
+from random import randint
 import networkx as nx
 import itertools
 
@@ -40,7 +41,7 @@ class A_star:
             temp = path_as_dict[temp]
         return path_as_list
 
-    def a_star_search(self, start, goal):
+    def a_star_search(self, start, goal, k_range):
         frontier = PriorityQueue()
         frontier.put(start, 0)
         came_from = {}
@@ -54,35 +55,14 @@ class A_star:
             if current == goal:
                 break
 
+            k = randint(1, k_range)
+
             for next in self.graph.neighbors(current):
                 if next in self.valid_nodes:
                     new_cost = cost_so_far[current] + self.graph[current][next]['length']
                     if next not in cost_so_far or new_cost < cost_so_far[next]:
                         cost_so_far[next] = new_cost
-                        priority = new_cost + self.heuristic(goal, next)
+                        priority = new_cost + k * self.heuristic(goal, next)
                         frontier.put(next, priority)
                         came_from[next] = current
         return self.path_as_list(came_from, goal), cost_so_far
-
-
-# g = nx.Graph()
-# g.add_node(1, coordinate=(0,0))
-# g.add_node(3, coordinate=(1,1))
-# g.add_node(5, coordinate=(1,2))
-# g.add_node(7, coordinate=(0,3))
-# g.add_node(9, coordinate=(-2,5))
-# g.add_node(8, coordinate=(-3,3))
-# # g.add_node(2, coordinate=(-2,1.5))
-# g.add_node(2, coordinate=(-0.01,2.99))
-# g.add_edges_from([(1, 2), (1, 3),(2, 9),(9, 7),(3, 5),(5, 7),(2,8)])
-#
-# valid_nodes = {}
-# for n1, n2 in g.edges():
-#     valid_nodes[n1] = 0
-#     valid_nodes[n2] = 0
-#     c1, c2 = osmgraph.tools.coordinates(g, (n1, n2))
-#     g[n1][n2]['length'] = geog.distance(c1, c2)
-#
-# a_star = A_star(g, valid_nodes)
-# shortest_path, _ = a_star.a_star_search(1,7)
-# print(shortest_path)
