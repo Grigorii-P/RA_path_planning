@@ -1,9 +1,7 @@
 import heapq
 import osmgraph
 import geog
-from random import randint
-import networkx as nx
-import itertools
+from random import randint, choice
 
 #
 ## https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-astar
@@ -42,6 +40,7 @@ class A_star:
         return path_as_list
 
     def a_star_search(self, start, goal, k_range):
+        assert type(k_range) == list
         frontier = PriorityQueue()
         frontier.put(start, 0)
         came_from = {}
@@ -55,7 +54,7 @@ class A_star:
             if current == goal:
                 break
 
-            k = randint(1, k_range)
+            k = choice(k_range)
 
             for next in self.graph.neighbors(current):
                 if next in self.valid_nodes:

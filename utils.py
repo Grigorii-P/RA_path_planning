@@ -11,11 +11,6 @@ def dist(graph,path):
 def ACC(graph, shortest_path, a_star_path):
     """
     Route accuracy
-
-    :param graph:
-    :param shortest_path:
-    :param a_star_path:
-    :return:
     """
     return dist(graph,shortest_path) / dist(graph,a_star_path)
 
@@ -23,11 +18,6 @@ def ACC(graph, shortest_path, a_star_path):
 def RUL(graph, shortest_paths, a_star_paths):
     """
     Road usage length
-
-    :param graph: its nodes should have 'length' field
-    :param shortest_paths:
-    :param a_star_paths:
-    :return:
     """
     shortest_dists, a_star_dists = [], []
 
