@@ -120,12 +120,12 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, file_name):
     for i, path in enumerate(paths):
         first = path[0]
         full_route = ''
-        for i in range(1, len(path)):
+        for j in range(1, len(path)):
             from_ = str(first)
-            to_ = str(path[i])
+            to_ = str(path[j])
             id = from_ + '_' + to_
             full_route += id + ' '
-            first = path[i]
+            first = path[j]
         route = SubElement(routes, 'route', {'id':'route'+str(i), 'edges':full_route})
 
     for i in range(len(paths)):

@@ -5,8 +5,11 @@ import osmgraph
 def dist(graph,path):
     path_dist = 0
     for n1, n2 in osmgraph.tools.pairwise(path):
-        path_dist += graph[n1][n2]['length']
-    return path_dist
+        try:
+            path_dist += graph[n1][n2]['length']
+        except KeyError:
+            path_dist += graph[n2][n1]['length']
+    return int(path_dist)
 
 def ACC(graph, shortest_path, a_star_path):
     """
