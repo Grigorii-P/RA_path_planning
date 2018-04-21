@@ -11,22 +11,16 @@ def dist(graph,path):
             path_dist += graph[n2][n1]['length']
     return int(path_dist)
 
-def ACC(graph, shortest_path, a_star_path):
+def ACC(shortest, a_star):
     """
     Route accuracy
     """
-    return dist(graph,shortest_path) / dist(graph,a_star_path)
+    return shortest / a_star
 
 
-def RUL(graph, shortest_paths, a_star_paths):
+def RUI(shortests, a_stars):
     """
     Road usage length
     """
-    shortest_dists, a_star_dists = [], []
 
-    for path in shortest_paths:
-        shortest_dists.append(dist(graph,path))
-    for path in a_star_paths:
-        a_star_dists.append(dist(graph,path))
-
-    return 1 - sum(shortest_dists)/sum(a_star_dists)
+    return 1 - sum(shortests)/sum(a_stars)

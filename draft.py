@@ -68,37 +68,66 @@ for n1, n2 in g.edges():
 
 a_star = A_star(g, valid_nodes)
 
-
+size = 2
 valid_nodes_list = valid_nodes.keys()
 shuffle(valid_nodes_list)
-size = 10
-# sources = valid_nodes_list[0:size]
-# destinations = valid_nodes_list[size:2 * size]
-sources = [3621486916]
-destinations = [3621486914]
+sources = valid_nodes_list[0:size]
+destinations = valid_nodes_list[size:2*size]
 
-temp=0
-temp += dist(g, [3621486916, 3621486914])
-
-# ks = [1.5, 2, 3, 4, 5]
-ks = [1.5]
-range_ = 3
+ks = [1.5, 2, 3, 4, 5]
+range_ = 10
 repeats = 1
-Sr = []
+Sd = []
+k_Sr = []
+stop_flag = False
 
+start = time()
 for k in ks:
     k_max = k
     step = (k_max - 1) / range_
     k_range = list(np.arange(1, k_max, step))
     k_range.append(k_max)
 
+    Sr = []
     for src, dst in itertools.izip(sources, destinations):
         try:
             temp = 0
             for i in range(repeats):
                 a_star_path, _ = a_star.a_star_search(src, dst, k_range)
-                temp += dist(g, [3621486914, 3621486916])
+                temp += dist(g, a_star_path)
             temp = int(temp / repeats)
             Sr.append(temp)
-        except KeyError:
+
+            if not stop_flag:
+                shortest_path = nx.shortest_path(g, src, dst, 'length')
+                dist_ = dist(g, shortest_path)
+                Sd.append(dist_)
+
+        except (KeyError, nx.NetworkXNoPath):
             continue
+
+    k_Sr.append(Sr)
+    stop_flag = True
+
+end = time()
+print('time spent is %.1f min' % ((end - start) / 60))
+
+
+
+
+
+
+
+ACCs = []
+RUIs = []
+
+for k in k_Sr:
+    acc = 0
+    for sd, sr in itertools.izip(Sd, k):
+        acc += ACC(sd, sr)
+    ACCs.append(round(acc / len(Sd), 2))
+    RUIs.append(round(RUI(Sd, k), 2))
+
+print(ks)
+print(ACCs)
+print(RUIs)
