@@ -17,6 +17,7 @@ def nodes_xml(graph, paths, file_name):
 
     nodes = Element('nodes')
     for node in nodes_dict:
+        #TODO instead of int key, make it str?
         id = str(node)
         coords = graph.node[node]['coordinate']
         x = str(coords[0])
@@ -108,11 +109,10 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, file_name):
 
     for i in range(num_vehicle_types):
         accel = str(round(uniform(0.5, 3.0), 1))
-        decel = str(round(uniform(2.0, 8.0), 1))
+        decel = str(round(uniform(4.0, 6.0), 1))
         id = 'Car'+str(i)
-        length = str(round(uniform(5, 25), 1))
+        length = str(round(uniform(10, 25), 1))
         maxSpeed = str(randint(60, 120))
-        #TODO interesting parameter
         sigma = '0.0'
         vType = SubElement(
             routes, 'vType', {'accel':accel, 'decel':decel, 'id':id, 'length':length, 'maxSpeed':maxSpeed, 'sigma':sigma})

@@ -68,37 +68,37 @@ for n1, n2 in g.edges():
 
 a_star = A_star(g, valid_nodes)
 
-
-
-
-
-
-
-
-
-
 sources = [370708433]
 destinations = [1928298965]
-paths = []
+# sources = [2021102219]
+# destinations = [4639186957]
 
+num_cars = [5,10]
+
+shortest_paths, a_paths = [], []
 for src, dst in itertools.izip(sources, destinations):
     path = nx.shortest_path(g, src, dst, 'length')
-    coords = osmgraph.tools.coordinates(g, path)
-    paths.append({'type': 'LineString', 'coordinates': coords})
-
-k = 5
+    shortest_paths.append(path)
+#     coords = osmgraph.tools.coordinates(g, path)
+#     paths.append({'type': 'LineString', 'coordinates': coords})
+k = 2
 range_ = 10
 k_max = k
-step = (k_max-1)/range_
+step = (k_max - 1) / range_
 k_range = list(np.arange(1, k_max, step))
 k_range.append(k_max)
-
 variety = 6
 a_star = A_star(g, valid_nodes)
 for src, dst in itertools.izip(sources, destinations):
     for i in range(variety):
         a_star_path, _ = a_star.a_star_search(src, dst, k_range)
-        coords = osmgraph.tools.coordinates(g, a_star_path)
-        paths.append({'type': 'LineString', 'coordinates': coords})
+        a_paths.append(a_star_path)
+#         coords = osmgraph.tools.coordinates(g, a_star_path)
+#         paths.append({'type': 'LineString', 'coordinates': coords})
 
-geojsonio.display(json.dumps(paths))
+
+for n_cars in num_cars:
+    all_xmls(g, shortest_paths, 7, n_cars, 'maps/melbourne_sh/melbourne_sh_' + str(n_cars))
+    all_xmls(g, shortest_paths, 7, n_cars, 'maps/melbourne_a/melbourne_a_' + str(n_cars))
+
+
