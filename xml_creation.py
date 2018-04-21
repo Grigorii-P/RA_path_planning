@@ -102,7 +102,7 @@ def single_route_vehicles_xml(path, num_vehicle_types, num_cars, file_name):
     xml_ = xml.dom.minidom.parseString(tostring(routes))
     print(xml_.toprettyxml())
 
-def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, file_name):
+def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_path, file_name):
     num_cars_in_flow = int(num_cars/len(paths))
     routes = Element('routes')
 
@@ -128,17 +128,28 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, file_name):
             first = path[j]
         route = SubElement(routes, 'route', {'id':'route'+str(i), 'edges':full_route})
 
+
     for i in range(len(paths)):
+        num_flows_for_shortest_path = 5
         begin = "0"
         departPos = "0"
         id = str(i)
         period = "1"
         number = str(num_cars_in_flow)
         route = 'route'+str(i)
-        type = "Car"+str(randint(0,num_vehicle_types))
-        flow = SubElement(
-            routes, 'flow',
-            {'begin':begin, 'departPos':departPos, 'id':id, 'period':period, 'number':number, 'route':route, 'type':type})
+        if is_shortest_path:
+            num = num_flows_for_shortest_path
+            for n in range(num):
+                type = "Car" + str(randint(0, num_vehicle_types))
+                flow = SubElement(
+                    routes, 'flow',
+                    {'begin':begin, 'departPos':departPos, 'id':id, 'period':period, 'number':number, 'route':route, 'type':type})
+        else:
+            type = "Car" + str(randint(0, num_vehicle_types))
+            flow = SubElement(
+                routes, 'flow',
+                {'begin': begin, 'departPos': departPos, 'id': id, 'period': period, 'number': number, 'route': route,
+                 'type': type})
 
     tree = ET.ElementTree(routes)
     tree.write(file_name + ".rou.xml")
@@ -146,14 +157,14 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, file_name):
     xml_ = xml.dom.minidom.parseString(tostring(routes))
     print(xml_.toprettyxml())
 
-def all_xmls(graph, paths, num_vehicle_types, num_cars, file_name):
+def all_xmls(graph, paths, num_vehicle_types, num_cars, is_shortest_path, file_name):
     nodes_xml(graph, paths, file_name)
     if type(paths[0]) == int:
         single_edges_xml(paths, file_name)
         single_route_vehicles_xml(paths, num_vehicle_types, num_cars, file_name)
     else:
         multiple_edges_xml(paths, file_name)
-        multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, file_name)
+        multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_path, file_name)
 
 
 

@@ -99,6 +99,6 @@ for src, dst in itertools.izip(sources, destinations):
 
 for n_cars in num_cars:
     all_xmls(g, shortest_paths, 7, n_cars, 'maps/melbourne_sh/melbourne_sh_' + str(n_cars))
-    all_xmls(g, shortest_paths, 7, n_cars, 'maps/melbourne_a/melbourne_a_' + str(n_cars))
+    all_xmls(g, a_star, 7, n_cars, 'maps/melbourne_a/melbourne_a_' + str(n_cars))
 
 
