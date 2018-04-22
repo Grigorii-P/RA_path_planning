@@ -1,0 +1,10 @@
+<configuration>
+    <input>
+        <net-file value="melbourne_a_1500.net.xml"/>
+        <route-files value="melbourne_a_1500.rou.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="20000"/>
+    </time>
+</configuration>
