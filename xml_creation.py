@@ -138,16 +138,16 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_
         route = 'route'+str(i)
         if is_shortest_path:
             num_flows_for_shortest_path = 6
+            number = str(int(num_cars_in_flow/num_flows_for_shortest_path))
             for n in range(num_flows_for_shortest_path):
                 id = str(n)
                 type = "Car" + str(randint(0, num_vehicle_types-1))
-                number = str(int(num_cars_in_flow/num_flows_for_shortest_path))
                 flow = SubElement(
                     routes, 'flow',
                     {'begin':begin, 'departPos':departPos, 'id':id,
                      'period':period, 'number':number, 'route':route, 'type':type})
         else:
-            type = "Car" + str(randint(0, num_vehicle_types))
+            type = "Car" + str(randint(0, num_vehicle_types-1))
             flow = SubElement(
                 routes, 'flow',
                 {'begin': begin, 'departPos': departPos, 'id': id,
