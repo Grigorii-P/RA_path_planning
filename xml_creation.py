@@ -107,13 +107,12 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_
     routes = Element('routes')
 
     for i in range(num_vehicle_types):
-        accel = str(round(uniform(0.5, 3.0), 1))
+        accel = str(round(uniform(0.5, 5.0), 1))
         decel = str(round(uniform(2.0, 8.0), 1))
         id = 'Car'+str(i)
         length = str(round(uniform(5, 25), 1))
         maxSpeed = str(randint(60, 120))
-        #TODO interesting parameter
-        sigma = '0.0'
+        sigma = str(uniform(0.0, 1.0))
         vType = SubElement(
             routes, 'vType', {'accel':accel, 'decel':decel, 'id':id, 'length':length, 'maxSpeed':maxSpeed, 'sigma':sigma})
 
@@ -137,7 +136,7 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_
         number = str(num_cars_in_flow)
         route = 'route'+str(i)
         if is_shortest_path:
-            num_flows_for_shortest_path = 6
+            num_flows_for_shortest_path = 10
             number = str(int(num_cars_in_flow/num_flows_for_shortest_path))
             for n in range(num_flows_for_shortest_path):
                 id = str(n)
@@ -156,8 +155,8 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_
     tree = ET.ElementTree(routes)
     tree.write(file_name + ".rou.xml")
 
-    xml_ = xml.dom.minidom.parseString(tostring(routes))
-    print(xml_.toprettyxml())
+    # xml_ = xml.dom.minidom.parseString(tostring(routes))
+    # print(xml_.toprettyxml())
 
 def all_xmls(graph, paths, num_vehicle_types, num_cars, is_shortest_path, file_name):
     nodes_xml(graph, paths, file_name)
