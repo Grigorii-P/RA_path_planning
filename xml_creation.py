@@ -130,7 +130,6 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_
 
 
     for i in range(len(paths)):
-        num_flows_for_shortest_path = 5
         begin = "0"
         departPos = "0"
         id = str(i)
@@ -138,18 +137,21 @@ def multiple_route_vehicles_xml(paths, num_vehicle_types, num_cars, is_shortest_
         number = str(num_cars_in_flow)
         route = 'route'+str(i)
         if is_shortest_path:
-            num = num_flows_for_shortest_path
-            for n in range(num):
-                type = "Car" + str(randint(0, num_vehicle_types))
+            num_flows_for_shortest_path = 6
+            for n in range(num_flows_for_shortest_path):
+                id = str(n)
+                type = "Car" + str(randint(0, num_vehicle_types-1))
+                number = str(int(num_cars_in_flow/num_flows_for_shortest_path))
                 flow = SubElement(
                     routes, 'flow',
-                    {'begin':begin, 'departPos':departPos, 'id':id, 'period':period, 'number':number, 'route':route, 'type':type})
+                    {'begin':begin, 'departPos':departPos, 'id':id,
+                     'period':period, 'number':number, 'route':route, 'type':type})
         else:
             type = "Car" + str(randint(0, num_vehicle_types))
             flow = SubElement(
                 routes, 'flow',
-                {'begin': begin, 'departPos': departPos, 'id': id, 'period': period, 'number': number, 'route': route,
-                 'type': type})
+                {'begin': begin, 'departPos': departPos, 'id': id,
+                 'period': period, 'number': number, 'route': route, 'type': type})
 
     tree = ET.ElementTree(routes)
     tree.write(file_name + ".rou.xml")

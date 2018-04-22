@@ -56,49 +56,52 @@ import itertools
 from random import shuffle, choice
 from utils import *
 
-filename = '/Users/grigoriipogorelov/Desktop/melbourne.osm'
-g = osmgraph.parse_file(filename)
-
-valid_nodes = {}
-for n1, n2 in g.edges():
-    valid_nodes[n1] = 0
-    valid_nodes[n2] = 0
-    c1, c2 = osmgraph.tools.coordinates(g, (n1, n2))
-    g[n1][n2]['length'] = geog.distance(c1, c2)
-
-a_star = A_star(g, valid_nodes)
-
-sources = [370708433]
-destinations = [1928298965]
-# sources = [2021102219]
-# destinations = [4639186957]
-
-num_cars = [5,10]
-
-shortest_paths, a_paths = [], []
-for src, dst in itertools.izip(sources, destinations):
-    path = nx.shortest_path(g, src, dst, 'length')
-    shortest_paths.append(path)
-#     coords = osmgraph.tools.coordinates(g, path)
-#     paths.append({'type': 'LineString', 'coordinates': coords})
-k = 2
-range_ = 10
-k_max = k
-step = (k_max - 1) / range_
-k_range = list(np.arange(1, k_max, step))
-k_range.append(k_max)
-variety = 6
-a_star = A_star(g, valid_nodes)
-for src, dst in itertools.izip(sources, destinations):
-    for i in range(variety):
-        a_star_path, _ = a_star.a_star_search(src, dst, k_range)
-        a_paths.append(a_star_path)
-#         coords = osmgraph.tools.coordinates(g, a_star_path)
-#         paths.append({'type': 'LineString', 'coordinates': coords})
-
-
-for n_cars in num_cars:
-    all_xmls(g, shortest_paths, 7, n_cars, 'maps/melbourne_sh/melbourne_sh_' + str(n_cars))
-    all_xmls(g, a_star, 7, n_cars, 'maps/melbourne_a/melbourne_a_' + str(n_cars))
-
-
+# filename = '/Users/grigoriipogorelov/Desktop/melbourne.osm'
+# g = osmgraph.parse_file(filename)
+#
+# valid_nodes = {}
+# for n1, n2 in g.edges():
+#     valid_nodes[n1] = 0
+#     valid_nodes[n2] = 0
+#     c1, c2 = osmgraph.tools.coordinates(g, (n1, n2))
+#     g[n1][n2]['length'] = geog.distance(c1, c2)
+#
+# a_star = A_star(g, valid_nodes)
+#
+# sources = [370708433]
+# destinations = [1928298965]
+# # sources = [2021102219]
+# # destinations = [4639186957]
+#
+# num_cars = [5,10]
+#
+# shortest_paths, a_paths = [], []
+# for src, dst in itertools.izip(sources, destinations):
+#     path = nx.shortest_path(g, src, dst, 'length')
+#     shortest_paths.append(path)
+# #     coords = osmgraph.tools.coordinates(g, path)
+# #     paths.append({'type': 'LineString', 'coordinates': coords})
+# k = 2
+# range_ = 10
+# k_max = k
+# step = (k_max - 1) / range_
+# k_range = list(np.arange(1, k_max, step))
+# k_range.append(k_max)
+# variety = 6
+# a_star = A_star(g, valid_nodes)
+# for src, dst in itertools.izip(sources, destinations):
+#     for i in range(variety):
+#         a_star_path, _ = a_star.a_star_search(src, dst, k_range)
+#         a_paths.append(a_star_path)
+# #         coords = osmgraph.tools.coordinates(g, a_star_path)
+# #         paths.append({'type': 'LineString', 'coordinates': coords})
+#
+#
+# for n_cars in num_cars:
+#     all_xmls(g, shortest_paths, 7, n_cars, 'maps/melbourne_sh/melbourne_sh_' + str(n_cars))
+#     all_xmls(g, a_star, 7, n_cars, 'maps/melbourne_a/melbourne_a_' + str(n_cars))
+#
+#
+num_vehicle_types = 5
+for i in range(10):
+    print(randint(0, num_vehicle_types))
