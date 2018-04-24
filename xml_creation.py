@@ -35,7 +35,7 @@ def multiple_edges_xml(paths, file_name):
             to_ = str(path[i])
             id = from_ + '_' + to_
             first = path[i]
-            edge = SubElement(edges, 'edge', {'from': from_, 'id': id, 'to': to_, 'type':'a'})
+            edge = SubElement(edges, 'edge', {'from': from_, 'id': id, 'to': to_})
 
     tree = ET.ElementTree(edges)
     tree.write(file_name + ".edg.xml")

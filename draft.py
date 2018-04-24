@@ -31,7 +31,7 @@ a_star = A_star(g, valid_nodes)
 
 
 num_cars = [50,100,200,500,1000,1500,2000]
-num_cars_back = 5000
+num_cars_back = 1000
 type_cars_variety = 20
 
 sources = [370708433]
