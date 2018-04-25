@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 04/22/18 12:52:22 by SUMO netconvert Version 0.32.0
+<!-- generated on 04/25/18 12:04:36 by SUMO netconvert Version 0.32.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
@@ -8,6 +8,7 @@
     <input>
         <node-files value="melbourne_sh_200.nod.xml"/>
         <edge-files value="melbourne_sh_200.edg.xml"/>
+        <type-files value="melbourne.typ.xml"/>
     </input>
 
     <output>
@@ -24,6 +25,8 @@
 <net version="0.27" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
 
     <location netOffset="-311510.21,4186997.33" convBoundary="0.00,0.00,18964.33,1408.21" origBoundary="144.858764,-37.813132,145.074263,-37.798844" projParameter="+proj=utm +zone=55 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"/>
+
+    <type id="a" priority="1" numLanes="3" speed="120.00"/>
 
     <edge id=":1055841931_0" function="internal">
         <lane id=":1055841931_0_0" index="0" speed="13.90" length="0.15" shape="3889.51,1284.13 3889.55,1284.13 3889.58,1284.13 3889.61,1284.12 3889.66,1284.12"/>
