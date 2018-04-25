@@ -16,9 +16,7 @@ import xml.etree.ElementTree
 from utils import *
 
 
-
 filename = '/Users/grigoriipogorelov/Desktop/melbourne.osm'
-# filename = '/Users/grigoriipogorelov/Desktop/inno.osm'
 g = osmgraph.parse_file(filename)
 
 valid_nodes = {}
@@ -31,7 +29,7 @@ for n1, n2 in g.edges():
 a_star = A_star(g, valid_nodes)
 
 num_cars = [50,100,200,500,1000,1500,2000]
-num_cars_back = 5000
+num_cars_back = [0,1000,2000]
 type_cars_variety = 20
 
 sources = [370708433]
@@ -47,6 +45,7 @@ range_ = 10
 k_max = k
 step = (k_max - 1) / range_
 k_range = list(np.arange(1, k_max, step))
+k_range = [round(x,2) for x in k_range]
 k_range.append(k_max)
 
 variety = 20
@@ -56,9 +55,11 @@ for src, dst in itertools.izip(sources, destinations):
         a_star_path, _ = a_star.a_star_search(src, dst, k_range)
         a_paths.append(a_star_path)
 
-for n_cars in num_cars:
-    all_xmls(g, shortest_paths, type_cars_variety, n_cars, num_cars_back, True, 'maps/melbourne_sh/melbourne_sh_' + str(n_cars))
-    all_xmls(g, a_paths, type_cars_variety, n_cars, num_cars_back, False, 'maps/melbourne_a/melbourne_a_' + str(n_cars))
+
+for back_cars in num_cars_back:
+    for n_cars in num_cars:
+        all_xmls(g, shortest_paths, type_cars_variety, n_cars, back_cars, True, 'maps/melbourne_sh/background_'+str(back_cars)+'/melbourne_sh_' + str(n_cars))
+        all_xmls(g, a_paths, type_cars_variety, n_cars, back_cars, False, 'maps/melbourne_a/background_'+str(back_cars)+'/melbourne_a_' + str(n_cars))
 
 
 
