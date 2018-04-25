@@ -28,7 +28,8 @@ def mean_time(path):
     all_vehicles = []
     e = xml.etree.ElementTree.parse(path).getroot()
     for field in e.findall('vehicle'):
-        depart = float(field.get('depart'))
-        arrival = float(field.get('arrival'))
-        all_vehicles.append(arrival-depart)
+        if field.get('type') != 'back_car':
+            depart = float(field.get('depart'))
+            arrival = float(field.get('arrival'))
+            all_vehicles.append(arrival-depart)
     return round(sum(all_vehicles)/len(all_vehicles),2)
